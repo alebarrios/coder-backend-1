@@ -3,9 +3,9 @@ import cartsRouter from "./carts.router.js";
 
 const request = testServer(cartsRouter)
 
-describe('GET /carts', () => {
+describe('GET /api/carts', () => {
     it("should return 200", async () => {
-        const { status } = await request.get('/carts');
+        const { status } = await request.get('/api/carts');
         expect(status).toEqual(200);
     });
 
