@@ -34,5 +34,11 @@ async function getProductById(req,res){
 };
 
 async function postProduct(req,res){
-    res.status(201).json(await productManager.getAll());
+    try {
+        const product = await productManager.insertOne(req.body);
+        res.status(201).json({ status: "success", payload: product });
+
+    } catch (error) {
+        res.status(error.code || 500).json({ status: "error", message: error.message });
+    }
 };

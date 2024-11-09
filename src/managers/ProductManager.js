@@ -1,6 +1,7 @@
 import ErrorManager from "./ErrorManager";
 import { readJsonFile, writeJsonFile } from "../utils/fileHandler"
 import paths from "../utils/paths.js";
+import generateId from "../utils/collectionHandler.js"
 
 export default class ProductManager {
     #jsonFilename;
@@ -45,11 +46,13 @@ export default class ProductManager {
     // Inserta un producto
     async insertOne(data) {
         try {
-            const { title, description, code, price, status, stock, category } = data;
-
-            if (!title || !description || !code || !price || !status || !stock || !category) {
+            if (data == undefined || !('title' in data) || !('description' in data) || !('code' in data) ||
+            !('price' in data) || !('status' in data) || !('stock' in data) ||
+            !('category' in data)) {
                 throw new ErrorManager("Faltan datos obligatorios", 400);
             }
+
+            const { title, description, code, price, status, stock, category } = data;
 
             const product = {
                 id: generateId(await this.getAll()),

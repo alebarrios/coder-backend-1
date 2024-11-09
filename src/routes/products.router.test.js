@@ -40,3 +40,13 @@ describe('GET /api/products/:id', () => {
     });
 
 });
+
+describe('POST /api/products', () => {
+
+    it("should return 400", async () => {
+        const { status, body } = await request.post('/api/products');
+        expect(status).toEqual(400);
+        expect(body.status).toBe("error");
+    });
+
+});
