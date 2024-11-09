@@ -4,11 +4,11 @@ import productsRouter from "./products.router.js";
 const request = testServer(productsRouter)
 
 describe('GET /api/products', () => {
-  /*  it("should return 200", async () => {
+    it("should return 200", async () => {
         const { status } = await request.get('/api/products');
         expect(status).toEqual(200);
     });
-*/
+
     it("should return 200", async () => {
         const { status, body } = await request.get('/api/products');
         //console.log(body);
@@ -19,9 +19,9 @@ describe('GET /api/products', () => {
 
 describe('GET /api/products/:id', () => {
     it("should return 200", async () => {
-        const { status, body } = await request.get('/api/products/1');
+        const { status, body : product } = await request.get('/api/products/2');
         expect(status).toEqual(200);
-        expect(body[0].id).toEqual('1');
+        expect(product.id).toEqual(2);
     });
 
 });

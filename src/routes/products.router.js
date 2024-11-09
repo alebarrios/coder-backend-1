@@ -14,6 +14,7 @@ async function getAllProducts(req,res){
     res.status(200).json(await productManager.getAll());
 };
 
-function getProductById(req,res){
-    res.status(200).json([{"id": "1"}]);
+async function getProductById(req,res){
+    const { id } = req.params;
+    res.status(200).json(await productManager.getOneById(id));
 };
