@@ -50,9 +50,7 @@ export default class CartManager {
     // Inserta un producto
     async insertOne(data) {
         try {
-            if (data == undefined || !('title' in data) || !('description' in data) || !('code' in data) ||
-            !('price' in data) || !('status' in data) || !('stock' in data) ||
-            !('category' in data)) {
+            if (data == undefined || !('products' in data) ) {
                 throw new ErrorManager("Faltan datos obligatorios", 400);
             }
 

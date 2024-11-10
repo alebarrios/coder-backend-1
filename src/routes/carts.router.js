@@ -25,11 +25,11 @@ async function getProductsByCartId(req,res){
 
 async function postCart(req,res){
     try {
-        
+        const cart = await cartManager.insertOne(req.body);
+        res.status(201).json({ status: "success", payload: cart });
     } catch (error) {
-        
+        res.status(error.code || 500).json({ status: "error", message: error.message });
     }
-    res.status(200).json([]);
 };
 
 async function postProductInCart(req,res){
