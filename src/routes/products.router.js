@@ -11,6 +11,8 @@ productsRouter.post('/', postProduct)
 
 productsRouter.put('/:id', putProduct)
 
+productsRouter.delete('/:id', deleteProduct)
+
 //inversion de control. Lo uso para poder hacer el Testing lo mas desacoplado posible.
 export default (app) => { app.use('/api/products', productsRouter)}
 
@@ -49,6 +51,17 @@ async function putProduct(req,res){
     try {
         const { id } = req.params;
         const product = await productManager.updateOneById(id, req.body);
+        res.status(200).json({ status: "success", payload: product });
+
+    } catch (error) {
+        res.status(error.code || 500).json({ status: "error", message: error.message });
+    }
+};
+
+async function deleteProduct(req,res){
+    try {
+        const { id } = req.params;
+        const product = await productManager.deleteOneById(id);
         res.status(200).json({ status: "success", payload: product });
 
     } catch (error) {

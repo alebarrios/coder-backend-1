@@ -13,6 +13,10 @@ export default class ProductManager {
 
     // Busca un producto por su ID
     async #findOneById(id) {
+
+        if(isNaN(id)) {
+            throw new ErrorManager("ID no numérico", 400);
+        }
         this.#products = await this.getAll();
         const productFound = this.#products.find((item) => item.id === Number(id));
 

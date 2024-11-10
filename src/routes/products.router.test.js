@@ -33,9 +33,9 @@ describe('GET /api/products/:id', () => {
         expect(body.status).toEqual("error");
     });
 
-    it("should return 404", async () => {
+    it("should return 400", async () => {
         const { status, body } = await request.get('/api/products/bla');
-        expect(status).toEqual(404);
+        expect(status).toEqual(400);
         expect(body.status).toEqual("error");
     });
 
@@ -153,3 +153,34 @@ describe('PUT /api/products/:id', () => {
         expect(body.payload.price).not.toBe(0);
     });
 })
+
+describe('DELETE /api/products/:id', () => {
+
+    it("should return 404", async () => {
+        const { status, body } = await request.delete('/api/products/867');
+
+        expect(status).toEqual(404);
+        expect(body.status).toEqual("error");
+    });
+
+    it("should return 400", async () => {
+        const { status, body } = await request.delete('/api/products/bla');
+
+        expect(status).toEqual(400);
+        expect(body.status).toEqual("error");
+    });
+
+    it("should return 200", async () => {
+
+        const { status, body } = await request.post('/api/products')
+        .send({
+            title:  "P",description: "D",code: "C",price:  1,status: true,stock: 1,category: "K"
+        });
+        expect(status).toEqual(201);
+
+        const { status: status2, body: body2 } = await request.delete('/api/products/4');
+
+        expect(status2).toEqual(200);
+        expect(body2.status).toBe("success");
+    });
+});
