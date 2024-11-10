@@ -77,16 +77,23 @@ export default class ProductManager {
     // Actualiza un producto en específico
     async updateOneById(id, data) {
         try {
-            const { firstName, lastName, age, email, country } = data;
+
+            if (id == undefined || data == undefined || Object.keys(data).length === 0) {
+                throw new ErrorManager("Faltan datos obligatorios", 400);
+            }
+
             const productFound = await this.#findOneById(id);
+            const { title, description, code, price, status, stock, category } = data;
 
             const product = {
                 id: productFound.id,
-                firstName: firstName || productFound.firstName,
-                lastName: lastName || productFound.lastName,
-                age: age ? Number(age) : productFound.age,
-                email: email || productFound.email,
-                country: country || productFound.country,
+                title: title || productFound.title,
+                description: description || productFound.description,
+                code: code || productFound.code,
+                price: price ? Number(price) : productFound.price,
+                status: status || productFound.status,
+                stock: stock ? Number(stock) : productFound.stock,
+                category: category || productFound.category,
             };
 
             const index = this.#products.findIndex((item) => item.id === Number(id));

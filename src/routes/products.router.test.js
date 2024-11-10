@@ -84,4 +84,12 @@ describe.only('PUT /api/products/:id', () => {
         expect(status).toEqual(404);
         expect(body.status).toEqual("error");
     });
+
+    it.only("should return 400", async () => {
+        const { status, body } = await request.put('/api/products/2')
+        console.log(body);
+
+        expect(status).toEqual(400);
+        expect(body.status).toEqual("error");
+    });
 })
