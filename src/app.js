@@ -12,7 +12,7 @@ cartsRouter(app);
 
 // Control de rutas inexistentes
 app.use("*", (req, res) => {
-    res.status(404).send("<h1>Ruta desconocida</h1>");
+    res.status(404).json({ status: "error", message: "Ruta desconocida" });
 });
 
 app.listen(PORT, () => {

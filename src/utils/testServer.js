@@ -8,6 +8,10 @@ function testServer(route){
     app.use(express.urlencoded({ extended: true }));
     app.use(express.json());
     route(app);
+    // Control de rutas inexistentes
+    app.use("*", (req, res) => {
+        res.status(404).json({ status: "error", message: "Ruta desconocida" });
+    });
     return supertest(app);
 }
 
