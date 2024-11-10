@@ -49,4 +49,28 @@ describe('POST /api/products', () => {
         expect(body.status).toBe("error");
     });
 
+    it("should return 400", async () => {
+        const { status, body } = await request.post('/api/products')
+        .send({title: "productoX"});
+
+        expect(status).toEqual(400);
+        expect(body.status).toBe("error");
+    });
+
+    it("should return 201", async () => {
+        const { status, body } = await request.post('/api/products')
+        .send({
+            title:      "producto 4",
+            description: "Descripción producto 4",
+            code:       "Codigo 4",
+            price:      444,
+            status:     true,
+            stock:      4,
+            category:   "Categoría Producto 4"
+        });
+
+        expect(status).toEqual(201);
+        expect(body.status).toBe("success");
+    });
+
 });

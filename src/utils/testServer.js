@@ -5,6 +5,8 @@ import supertest from "supertest";
 // con app cargada con SOLO esa ruta.
 function testServer(route){
     const app = express();
+    app.use(express.urlencoded({ extended: true }));
+    app.use(express.json());
     route(app);
     return supertest(app);
 }
