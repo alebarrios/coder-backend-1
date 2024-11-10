@@ -62,7 +62,7 @@ describe('POST /api/products', () => {
         .send({
             title:      "producto 4",
             description: "Descripción producto 4",
-            code:       "Codigo 4",
+            code:       "Código 4",
             price:      444,
             status:     true,
             stock:      4,
@@ -74,3 +74,14 @@ describe('POST /api/products', () => {
     });
 
 });
+
+describe.only('PUT /api/products/:id', () => {
+
+    it("should return 404", async () => {
+        const { status, body } = await request.put('/api/products/555')
+        console.log(body.message);
+
+        expect(status).toEqual(404);
+        expect(body.status).toEqual("error");
+    });
+})
