@@ -75,21 +75,81 @@ describe('POST /api/products', () => {
 
 });
 
-describe.only('PUT /api/products/:id', () => {
+describe('PUT /api/products/:id', () => {
+
+    it("should return 400", async () => {
+        const { status, body } = await request.put('/api/products/2')
+
+        expect(status).toEqual(400);
+        expect(body.status).toEqual("error");
+    });
+
+    it("should return 400", async () => {
+        const { status, body } = await request.put('/api/products/555')
+
+        expect(status).toEqual(400);
+        expect(body.status).toEqual("error");
+    });
+
+    it("should return 400", async () => {
+        const { status, body } = await request.put('/api/products/555')
+        .send({});
+
+        expect(status).toEqual(400);
+        expect(body.status).toEqual("error");
+    });
 
     it("should return 404", async () => {
         const { status, body } = await request.put('/api/products/555')
-        console.log(body.message);
+        .send({title: "Un nuevo título"});
 
         expect(status).toEqual(404);
         expect(body.status).toEqual("error");
     });
 
-    it.only("should return 400", async () => {
-        const { status, body } = await request.put('/api/products/2')
-        console.log(body);
+    it("should return 200", async () => {
+        const { status, body } = await request.put('/api/products/3')
+        .send({
+            title:      "producto 3 NUEVO",
+            description: "Descripción NUEVA producto 3",
+            code:       "Código 3",
+            price:      334,
+            status:     true,
+            stock:      1,
+            category:   "Categoría Producto 3"
+        });
 
-        expect(status).toEqual(400);
-        expect(body.status).toEqual("error");
+        expect(status).toEqual(200);
+        expect(body.status).toBe("success");
+    });
+
+    it("should return 200", async () => {
+        const { status, body } = await request.put('/api/products/2')
+        .send({
+            description: "Descripción NUEVA producto 2",
+            status:     false,
+            stock:      0
+        });
+
+        expect(status).toEqual(200);
+        expect(body.status).toBe("success");
+        expect(body.payload.id).toBe(2);
+        expect(body.payload.status).toBe(false);
+        expect(body.payload.stock).toBe(0);
+    });
+
+    it("should return 200", async () => {
+        const { status, body } = await request.put('/api/products/2')
+        .send({
+            description: "",
+            price:      0,
+            stock:      1
+        });
+
+        expect(status).toEqual(200);
+        expect(body.status).toBe("success");
+        expect(body.payload.id).toBe(2);
+        expect(body.payload.stock).toBe(1);
+        expect(body.payload.price).not.toBe(0);
     });
 })

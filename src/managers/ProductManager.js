@@ -54,13 +54,17 @@ export default class ProductManager {
 
             const { title, description, code, price, status, stock, category } = data;
 
+            if(price == 0) {
+                throw new ErrorManager("El precio no puede ser 0", 400);
+            }
+
             const product = {
                 id: generateId(await this.getAll()),
                 title,
                 description,
                 code,
                 price: Number(price),
-                status,
+                status: true,
                 stock: Number(stock),
                 category
             };
@@ -90,9 +94,9 @@ export default class ProductManager {
                 title: title || productFound.title,
                 description: description || productFound.description,
                 code: code || productFound.code,
-                price: price ? Number(price) : productFound.price,
-                status: status || productFound.status,
-                stock: stock ? Number(stock) : productFound.stock,
+                price: price ? Number(price) : productFound.price, //0 no es válido
+                status: status ?? productFound.status,
+                stock: Number(stock) ?? productFound.stock,   //o es válido
                 category: category || productFound.category,
             };
 
