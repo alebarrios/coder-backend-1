@@ -21,7 +21,6 @@ describe('GET /api/carts/:cid', () => {
 
     it("should return 200", async () => {
         const { status, body } = await request.get('/api/carts/2');
-        console.log(body.payload);
 
         expect(status).toEqual(200);
         expect(body.status).toBe("success");
@@ -66,7 +65,6 @@ describe.only('POST /api/carts/', () => {
     it("should return 400", async () => {
         const { status, body } = await request.post('/api/carts')
         .send({products: []});
-        console.log(body);
 
         expect(status).toEqual(400);
         expect(body.status).toBe("error");   //Faltan datos obligatorios
@@ -83,7 +81,6 @@ describe.only('POST /api/carts/', () => {
     it("should return 400", async () => {
         const { status, body } = await request.post('/api/carts')
         .send({products: [{productId: 55, quantity: 5}, {quantity: 6} ]});
-        console.log(body);
 
         expect(status).toEqual(400);
         expect(body.status).toBe("error");   //Faltan datos obligatorios
@@ -100,10 +97,33 @@ describe.only('POST /api/carts/', () => {
     it("should return 400", async () => {
         const { status, body } = await request.post('/api/carts')
         .send({products: [{productId: 55, quantity: 5}, {productId: 66, quantity: -1} ]});
-        console.log(body);
 
         expect(status).toEqual(400);
         expect(body.status).toBe("error");   //quantity debe ser numérico y no negativo
+    });
+
+    it("should return 400", async () => {
+        const { status, body } = await request.post('/api/carts')
+        .send({products: [{productId: 55, quantity: 5}, {productId: 55, quantity: 6} ]});
+
+        expect(status).toEqual(400);
+        expect(body.status).toBe("error");  //productId duplicado
+    });
+
+    it("should return 201", async () => {
+        const { status, body } = await request.post('/api/carts')
+        .send({products: [{productId: 44, quantity: 4}]});
+
+        expect(status).toEqual(201);
+        expect(body.status).toBe("success");
+    });
+
+    it("should return 201", async () => {
+        const { status, body } = await request.post('/api/carts')
+        .send({products: [{productId: 55, quantity: 5}, {productId: 66, quantity: 6} ]});
+
+        expect(status).toEqual(201);
+        expect(body.status).toBe("success");
     });
 
 });

@@ -52,16 +52,16 @@ export default class CartManager {
         try {
 
             if (data == undefined || !('products' in data) || !Array.isArray(data.products)
-            || !(data.products.length >= 0)) {
+            || !(data.products.length > 0)) {
                 throw new ErrorManager("Faltan datos obligatorios", 400);
             }
 
             if(Object.keys(data).length > 1){
                 throw new ErrorManager("El request tiene formato inválido", 400);
             }
-            const { products } = data;
 
-            products.forEach(item => {
+            const newProducts = [];
+            data.products.forEach(item => {
                 if(Object.keys(item).length > 2){
                     throw new ErrorManager("products tiene formato inválido", 400);
                 }
@@ -74,11 +74,18 @@ export default class CartManager {
                 if( isNaN(item.quantity) || item.quantity < 0){
                     throw new ErrorManager("quantity debe ser numérico y no negativo", 400);
                 }
+
+                const productFound = newProducts.find((item2) => item2.productId === Number(item.productId));
+                if(!productFound) {
+                    newProducts.push({productId: item.productId, quantity: item.quantity});
+                }else{
+                    throw new ErrorManager("productId duplicado", 400);
+                }
             });
 
             const cart = {
                 id: generateId(await this.getAll()),
-                products
+                products: newProducts
             };
 
             this.#carts.push(cart);
