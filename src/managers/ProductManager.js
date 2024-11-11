@@ -1,5 +1,5 @@
-import ErrorManager from "./ErrorManager";
-import { readJsonFile, writeJsonFile } from "../utils/fileHandler"
+import ErrorManager from "./ErrorManager.js";
+import { readJsonFile, writeJsonFile } from "../utils/fileHandler.js"
 import paths from "../utils/paths.js";
 import generateId from "../utils/collectionHandler.js"
 

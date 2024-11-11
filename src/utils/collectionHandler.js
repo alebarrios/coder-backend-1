@@ -1,5 +1,5 @@
 // Genera un nuevo ID incrementando el ID máximo actual
-export default generateId = (collection) => {
+export default function generateId(collection) {
 
     if (!Array.isArray(collection)) {
         throw new Error("Colección no válida");

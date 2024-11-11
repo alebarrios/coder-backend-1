@@ -177,10 +177,8 @@ describe('DELETE /api/products/:id', () => {
         });
         expect(status).toEqual(201);
         const id = body.payload.id;
-        console.log(id);
 
         const { status: status2, body: body2 } = await request.delete(`/api/products/${id}`);
-
         expect(status2).toEqual(200);
         expect(body2.status).toBe("success");
     });
