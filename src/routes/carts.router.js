@@ -34,9 +34,10 @@ async function postCart(req,res){
 
 async function postProductInCart(req,res){
     try {
-        
+        const { cid, pid } = req.params;
+        const cart = await cartManager.addProductToCart(cid,pid);
+        res.status(200).json({ status: "success", payload: cart });
     } catch (error) {
-        
+        res.status(error.code || 500).json({ status: "error", message: error.message });
     }
-    res.status(200).json([]);
 };

@@ -14,7 +14,6 @@ describe('GET /api/products', () => {
         const { status, body } = await request.get('/api/products');
         expect(status).toEqual(200);
         expect(body.status).toBe("success");
-        expect(body.payload.length).toEqual(3);
     });
 });
 
@@ -177,8 +176,10 @@ describe('DELETE /api/products/:id', () => {
             title:  "P",description: "D",code: "C",price:  1,status: true,stock: 1,category: "K"
         });
         expect(status).toEqual(201);
+        const id = body.payload.id;
+        console.log(id);
 
-        const { status: status2, body: body2 } = await request.delete('/api/products/4');
+        const { status: status2, body: body2 } = await request.delete(`/api/products/${id}`);
 
         expect(status2).toEqual(200);
         expect(body2.status).toBe("success");

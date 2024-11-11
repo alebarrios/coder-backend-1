@@ -27,7 +27,7 @@ export default class CartManager {
         return productFound;
     }
 
-    // Obtiene una lista de productos
+    // Obtiene una lista de carritos
     async getAll() {
         try {
             this.#carts = await readJsonFile(paths.files, this.#jsonFilename);
@@ -37,7 +37,7 @@ export default class CartManager {
         }
     }
 
-    // Obtiene un producto específico por su ID
+    // Obtiene un carrito específico por su ID
     async getOneById(id) {
         try {
             const productFound = await this.#findOneById(id);
@@ -47,7 +47,7 @@ export default class CartManager {
         }
     }
 
-    // Inserta un producto
+    // Inserta un carrito con productos
     async insertOne(data) {
         try {
 
@@ -97,48 +97,31 @@ export default class CartManager {
         }
     }
 
-    // Actualiza un producto en específico
-    async updateOneById(id, data) {
+    // Actualiza un producto específico dentro de un carrito
+    async addProductToCart(id, productId) {
         try {
+            const cartFound = await this.#findOneById(id);
 
-            if (id == undefined || data == undefined || Object.keys(data).length === 0) {
-                throw new ErrorManager("Faltan datos obligatorios", 400);
+            if( isNaN(productId) || productId < 0){
+                throw new ErrorManager("productId debe ser numérico y no negativo", 400);
             }
 
-            const productFound = await this.#findOneById(id);
-            const { title, description, code, price, status, stock, category } = data;
+            const productIndex = cartFound.products.findIndex((item) => item.productId === Number(productId));
 
-            const product = {
-                id: productFound.id,
-                title: title || productFound.title,
-                description: description || productFound.description,
-                code: code || productFound.code,
-                price: price ? Number(price) : productFound.price, //0 no es válido
-                status: status ?? productFound.status,
-                stock: Number(stock) ?? productFound.stock,   //o es válido
-                category: category || productFound.category,
-            };
+            if (productIndex >= 0) {
+                cartFound.products[productIndex].quantity++;
+            } else {
+                cartFound.products.push({ productId: Number(productId), quantity: 1 });
+            }
 
             const index = this.#carts.findIndex((item) => item.id === Number(id));
-            this.#carts[index] = product;
+            this.#carts[index] = cartFound;
             await writeJsonFile(paths.files, this.#jsonFilename, this.#carts);
 
-            return product;
+            return cartFound;
         } catch (error) {
             throw new ErrorManager(error.message, error.code);
         }
     }
 
-    // Elimina un producto en específico
-    async deleteOneById (id) {
-        try {
-            await this.#findOneById(id);
-
-            const index = this.#carts.findIndex((item) => item.id === Number(id));
-            this.#carts.splice(index, 1);
-            await writeJsonFile(paths.files, this.#jsonFilename, this.#carts);
-        } catch (error) {
-            throw new ErrorManager(error.message, error.code);
-        }
-    }
 }

@@ -13,7 +13,7 @@ describe('GET /api/carts/:cid', () => {
     });
 
     it("should return 404", async () => {
-        const { status, body } = await request.get('/api/carts/5');
+        const { status, body } = await request.get('/api/carts/777');
 
         expect(status).toEqual(404);
         expect(body.status).toBe("error");   //Id no encontrado
@@ -29,7 +29,7 @@ describe('GET /api/carts/:cid', () => {
 
 });
 
-describe.only('POST /api/carts/', () => {
+describe('POST /api/carts/', () => {
 
     it("should return 400", async () => {
         const { status, body } = await request.post('/api/carts');
@@ -124,6 +124,50 @@ describe.only('POST /api/carts/', () => {
 
         expect(status).toEqual(201);
         expect(body.status).toBe("success");
+    });
+
+});
+
+describe('POST /api/carts/:cid/product/:pid', () => {
+
+    it("should return 404", async () => {
+        const { status, body } = await request.post('/api/carts/25/product/1');
+
+        expect(status).toEqual(404);
+        expect(body.status).toBe("error");  //Id no encontrado
+    });
+
+    it("should return 400", async () => {
+        const { status, body } = await request.post('/api/carts/basura/product/1');
+
+        expect(status).toEqual(400);
+        expect(body.status).toBe("error");  //Id no numérico
+    });
+
+    it("should return 400", async () => {
+        const { status, body } = await request.post('/api/carts/1/product/basura');
+
+        expect(status).toEqual(400);
+        expect(body.status).toBe("error");  //Id no numérico
+    });
+
+    it("should return 200", async () => {
+        const { status, body } = await request.post('/api/carts/1/product/3');
+
+        expect(status).toEqual(200);
+        expect(body.status).toBe("success");
+    });
+
+    it("should return 200", async () => {
+        const { status, body } = await request.post('/api/carts/2/product/10');
+        expect(status).toEqual(200);
+        expect(body.status).toBe("success");
+        let productos = body.payload.products.length;
+
+        const { status: status2, body: body2 } = await request.post('/api/carts/2/product/10');
+        expect(status2).toEqual(200);
+        expect(body2.status).toBe("success");
+        expect(body2.payload.products.length).toBe(productos);
     });
 
 });
