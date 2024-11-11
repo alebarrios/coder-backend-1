@@ -50,31 +50,41 @@ export default class CartManager {
     // Inserta un producto
     async insertOne(data) {
         try {
-            if (data == undefined || !('products' in data) ) {
+
+            if (data == undefined || !('products' in data) || !Array.isArray(data.products)
+            || !(data.products.length >= 0)) {
                 throw new ErrorManager("Faltan datos obligatorios", 400);
             }
 
-            const { title, description, code, price, status, stock, category } = data;
-
-            if(price == 0) {
-                throw new ErrorManager("El precio no puede ser 0", 400);
+            if(Object.keys(data).length > 1){
+                throw new ErrorManager("El request tiene formato inválido", 400);
             }
+            const { products } = data;
 
-            const product = {
+            products.forEach(item => {
+                if(Object.keys(item).length > 2){
+                    throw new ErrorManager("products tiene formato inválido", 400);
+                }
+                if(!('productId' in item) || !('quantity' in item)){
+                    throw new ErrorManager("Faltan datos obligatorios", 400);
+                }
+                if( isNaN(item.productId)){
+                    throw new ErrorManager("productId debe ser numérico", 400);
+                }
+                if( isNaN(item.quantity) || item.quantity < 0){
+                    throw new ErrorManager("quantity debe ser numérico y no negativo", 400);
+                }
+            });
+
+            const cart = {
                 id: generateId(await this.getAll()),
-                title,
-                description,
-                code,
-                price: Number(price),
-                status: true,
-                stock: Number(stock),
-                category
+                products
             };
 
-            this.#carts.push(product);
+            this.#carts.push(cart);
             await writeJsonFile(paths.files, this.#jsonFilename, this.#carts);
 
-            return product;
+            return cart;
         } catch (error) {
             throw new ErrorManager(error.message, error.code);
         }
