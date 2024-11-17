@@ -1,6 +1,6 @@
 # Programación Backend I: Desarrollo Avanzado de Backend (comisión 70365)
 
-## Pre-Entrega 1 - Alejandro Barrios
+## Pre-Entrega 2 - Alejandro Barrios
 Instrucciones para ejecutar el proyecto:
 * Clonar repositorio: https://github.com/alebarrios/coder-backend-1.git
 * Desde la raíz del proyecto, ejecutar comando: ```npm install```
