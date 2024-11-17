@@ -1,12 +1,15 @@
 import express from "express";
 import productsRouter from "./routes/products.router.js";
 import cartsRouter from "./routes/carts.router.js";
+import { config as configHandlebars } from "./config/handlebars.config.js";
 
 const app = express();
 const PORT = 8080;
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+configHandlebars(app);
 
 productsRouter(app);
 cartsRouter(app);
