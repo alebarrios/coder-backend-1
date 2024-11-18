@@ -17,7 +17,7 @@ cartsRouter(app);
 
 // Control de rutas inexistentes
 app.use("*", (req, res) => {
-    res.status(404).render('error404', {layout : 'index', title: 'Error 404'});
+    res.status(404).render('error404', {layout : 'index', style: 'index.css', title: 'Error 404'});
 });
 
 app.listen(PORT, () => {
