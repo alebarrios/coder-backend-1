@@ -15,6 +15,7 @@ const paths = {
     managers: path.join(SRC_PATH, "managers"), // Ruta de managers
     routes: path.join(SRC_PATH, "routes"), // Ruta de routes de Express
     utils: path.join(SRC_PATH, "utils"), // Ruta de utils
+    views: path.join(SRC_PATH, "views"), // Ruta del vistas de Handlebars
 };
 
 export default paths;

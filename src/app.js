@@ -6,6 +6,7 @@ import { config as configHandlebars } from "./config/handlebars.config.js";
 const app = express();
 const PORT = 8080;
 
+app.use("/api/public", express.static("./src/public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
@@ -16,7 +17,7 @@ cartsRouter(app);
 
 // Control de rutas inexistentes
 app.use("*", (req, res) => {
-    res.status(404).json({ status: "error", message: "Ruta desconocida" });
+    res.status(404).render('error404', {layout : 'index', title: 'Error 404'});
 });
 
 app.listen(PORT, () => {
