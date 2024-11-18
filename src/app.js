@@ -1,6 +1,7 @@
 import express from "express";
 import productsRouter from "./routes/products.router.js";
 import cartsRouter from "./routes/carts.router.js";
+import productsViewRouter from "./routes/products.view.router.js";
 import { config as configHandlebars } from "./config/handlebars.config.js";
 
 const app = express();
@@ -11,6 +12,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 configHandlebars(app);
+
+app.use('/', productsViewRouter);
 
 productsRouter(app);
 cartsRouter(app);
