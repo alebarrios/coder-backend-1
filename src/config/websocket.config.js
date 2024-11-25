@@ -7,12 +7,12 @@ export const config = (httpServer) => {
 
     // Escucha el evento de conexión de un nuevo cliente
     socketServer.on("connection", async (socket) => {
-        console.log("Conexión establecida", socket.id);
+        console.log("Conexión establecida con usuario: ", socket.id);
 
 
         // Escucha el evento de des-conexión del cliente
-        socket.on("disconnect", (socket) => {
-            console.log("Se desconectó el cliente con Id: ", socket.id);
+        socket.on("disconnecting", (reason) => {
+            console.log("Se desconectó el usuario: ", socket.id);
         });
     });
 };
