@@ -10,6 +10,7 @@ Instrucciones para ejecutar el proyecto:
 ## Dependencias
 * Express: Web Framework liviano para Node.js.
 * express-handlebars: Handlebars view engine para Express.js.
+* socket.io: Framework para utilizar Websockets.
 
 ## Dependencias (Dev)
 * Nodemon: Para reiniciar web server automáticamente al modificar el código fuente.
