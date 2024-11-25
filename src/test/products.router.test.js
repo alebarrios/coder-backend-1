@@ -1,5 +1,5 @@
 import testServer from "../utils/testServer.js";
-import productsRouter from "./products.router.js";
+import productsRouter from "../routes/products.router.js";
 
 const request = testServer(productsRouter)
 

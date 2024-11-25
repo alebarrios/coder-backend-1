@@ -1,5 +1,5 @@
 import testServer from "../utils/testServer.js";
-import cartsRouter from "./carts.router.js";
+import cartsRouter from "../routes/carts.router.js";
 
 const request = testServer(cartsRouter)
 
