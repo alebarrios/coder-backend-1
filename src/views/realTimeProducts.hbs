@@ -1,10 +1,10 @@
 <header>
-    <h1>INICIO - Productos en Tiempo Real</h1>
+    <h1>Productos - WEBSOCKETS</h1>
 </header>
 
-<main>
+<main class="container">
     <section>
-        <h3>Productos</h3>
+        <h3>Listado dinámico de Productos</h3>
         {{!-- Uso de nomenclatura BEM (B de bloque, E de elemento y M de modificador)--}}
         <div class="products">
             <div class="products__list">
@@ -14,7 +14,7 @@
     </section>
 
     <section>
-        <h3>Formulario de Productos</h3>
+        <h3>Formulario de Alta de Productos</h3>
         <form class="products__form" id="products-form">
             <input type="text" name="title" placeholder="Nombre del producto">
             <input type="text" name="description" placeholder="Descripción del producto">
@@ -31,7 +31,7 @@
         <h3>Eliminación de Productos</h3>
         <div class="products__delete">
             <input type="number" class="products__delete__input" id="input-product-id"
-                placeholder="ID del Producto">
+                placeholder="ID del Producto a eliminar">
             <button id="btn-delete-product">Eliminar</button>
         </div>
     </section>

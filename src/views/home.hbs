@@ -1,20 +1,24 @@
-<h1>Lista de Productos</h1>
+<header>
+    <h1>Lista de Productos - HTTP</h1>
+</header>
 
-<table>
-    <tbody id="products-list">
-    <tr>
-        <th>Id</th>
-        <th>Título</th>
-        <th>Descripción</th>
-        <th>Código</th>
-        <th>Precio</th>
-        <th>Estado</th>
-        <th>Stock</th>
-        <th>Categoría</th>
-    </tr>
-    {{#each products }}
-    {{> product this}}
-    {{/each}}
-    </tbody>
-</table>
-<button id="btn-refresh-products-list">Recargar Lista</button>
+<main class="container">
+    <table>
+        <tbody id="products-list">
+        <tr>
+            <th>Id</th>
+            <th>Título</th>
+            <th>Descripción</th>
+            <th>Código</th>
+            <th>Precio</th>
+            <th>Estado</th>
+            <th>Stock</th>
+            <th>Categoría</th>
+        </tr>
+        {{#each products }}
+        {{> product this}}
+        {{/each}}
+        </tbody>
+    </table>
+    <button id="btn-refresh-products-list">Recargar Lista</button>
+</main>
