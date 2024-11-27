@@ -1,6 +1,7 @@
 <h1>Lista de Productos</h1>
 
 <table>
+    <tbody id="products-list">
     <tr>
         <th>Id</th>
         <th>Título</th>
@@ -14,4 +15,6 @@
     {{#each products }}
     {{> product this}}
     {{/each}}
+    </tbody>
 </table>
+<button id="btn-refresh-products-list">Recargar Lista</button>
