@@ -7,7 +7,7 @@ const btnDeleteProduct = document.getElementById("btn-delete-product");
 const errorMessage = document.getElementById("error-message");
 
 socket.on("products-list", (data) => {
-    console.log("products-list", data);
+
     const products = data.products ?? [];
     productsList.innerText = "";
 
@@ -17,13 +17,13 @@ socket.on("products-list", (data) => {
 });
 
 productsForm.onsubmit = (event) => {
-    console.log("onsubmit", event);
+
     event.preventDefault();
     const form = event.target;
     const formData = new FormData(form);
     errorMessage.innerText = "";
 
-    form.reset();
+    //form.reset();
 
     socket.emit("insert-product", {
         title: formData.get("title"),
@@ -36,8 +36,16 @@ productsForm.onsubmit = (event) => {
 };
 
 btnDeleteProduct.onclick = () => {
-    console.log("onclick btnDeleteProduct");
 
+    const id = Number(inputProductId.value);
+    inputProductId.value = "";
+    errorMessage.innerText = "";
+
+    if (id > 0) {
+        socket.emit("delete-product", { id });
+    } else {
+        errorMessage.innerText = "Id a eliminar inválido";
+    }
 };
 
 socket.on("error-message", (data) => {

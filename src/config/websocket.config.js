@@ -25,6 +25,15 @@ export const config = (httpServer) => {
             }
         });
 
+        socket.on("delete-product", async (data) => {
+            try {
+                await productManager.deleteOneById(Number(data.id));
+                socketServer.emit("products-list", { products: await productManager.getAll() });
+            } catch (error) {
+                socketServer.emit("error-message", { message: error.message });
+            }
+        });
+
         // Escucha el evento de des-conexión del cliente
         socket.on("disconnecting", (reason) => {
             console.log("Se desconectó el usuario: ", socket.id);
