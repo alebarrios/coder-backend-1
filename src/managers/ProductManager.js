@@ -51,15 +51,30 @@ export default class ProductManager {
     async insertOne(data) {
         try {
             if (data == undefined || !('title' in data) || !('description' in data) || !('code' in data) ||
-            !('price' in data) || !('status' in data) || !('stock' in data) ||
+            !('price' in data) || !('stock' in data) ||
             !('category' in data)) {
                 throw new ErrorManager("Faltan datos obligatorios", 400);
             }
 
-            const { title, description, code, price, status, stock, category } = data;
+            const { title, description, code, price, stock, category } = data;
 
-            if(price == 0) {
+            if (typeof title === "string" && title.trim().length === 0) {
+                throw new ErrorManager("El título no puede ser vacío", 400);
+            }
+            if (typeof description === "string" && description.trim().length === 0) {
+                throw new ErrorManager("La descripción no puede ser vacía", 400);
+            }
+            if (typeof code === "string" && code.trim().length === 0) {
+                throw new ErrorManager("El código no puede ser vacío", 400);
+            }
+            if(!Number.isInteger(parseFloat(price)) || price == 0) {
                 throw new ErrorManager("El precio no puede ser 0", 400);
+            }
+            if(!Number.isInteger(parseInt(stock))) {
+                throw new ErrorManager("El stock debe ser numérico", 400);
+            }
+            if (typeof category === "string" && category.trim().length === 0) {
+                throw new ErrorManager("La categoría no puede ser vacía", 400);
             }
 
             const product = {
