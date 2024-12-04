@@ -4,9 +4,12 @@ import cartsRouter from "./routes/carts.router.js";
 import productsViewRouter from "./routes/products.view.router.js";
 import { config as configHandlebars } from "./config/handlebars.config.js";
 import { config as configWebsocket } from "./config/websocket.config.js";
+import { connectDB } from "./config/mongoose.config.js";
 
 const app = express();
 const PORT = 8080;
+// Conexión con la Base de Datos del Cloud de MongoDB
+connectDB();
 
 app.use("/api/public", express.static("./src/public"));
 app.use(express.urlencoded({ extended: true }));
