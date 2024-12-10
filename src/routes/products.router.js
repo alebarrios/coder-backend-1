@@ -18,11 +18,11 @@ export default (app) => { app.use('/api/products', productsRouter)}
 
 async function getAllProducts(req,res){
     try {
-        const products = await productManager.getAll();
+        const products = await productManager.getAll(req.query);
         res.status(200).json({ status: "success", payload: products });
 
     } catch (error) {
-        res.status(error.code || 500).json({ status: "error", message: error.message });
+        res.status(error.code).json({ status: "error", message: error.message });
     }
 };
 
@@ -33,7 +33,7 @@ async function getProductById(req,res){
         res.status(200).json({ status: "success", payload: product });
 
     } catch (error) {
-        res.status(error.code || 500).json({ status: "error", message: error.message });
+        res.status(error.code).json({ status: "error", message: error.message });
     }
 };
 
@@ -43,7 +43,7 @@ async function postProduct(req,res){
         res.status(201).json({ status: "success", payload: product });
 
     } catch (error) {
-        res.status(error.code || 500).json({ status: "error", message: error.message });
+        res.status(error.code).json({ status: "error", message: error.message });
     }
 };
 
@@ -54,7 +54,7 @@ async function putProduct(req,res){
         res.status(200).json({ status: "success", payload: product });
 
     } catch (error) {
-        res.status(error.code || 500).json({ status: "error", message: error.message });
+        res.status(error.code).json({ status: "error", message: error.message });
     }
 };
 
@@ -65,6 +65,6 @@ async function deleteProduct(req,res){
         res.status(200).json({ status: "success", payload: product });
 
     } catch (error) {
-        res.status(error.code || 500).json({ status: "error", message: error.message });
+        res.status(error.code).json({ status: "error", message: error.message });
     }
 };
