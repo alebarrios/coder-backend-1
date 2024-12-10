@@ -30,7 +30,7 @@ export default class ProductManager {
         try {
             const $and = [];
 
-            if (params?.title) $and.push({ title: { $regex: params.title, $options: "i" } });
+            if (params?.avail) $and.push({ status: convertToBoolean(params.avail) });
             if (params?.category) $and.push({ category: { $regex: params.category, $options: "i" } });
             const filters = $and.length > 0 ? { $and } : {};
 
