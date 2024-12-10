@@ -17,6 +17,7 @@ Instrucciones para ejecutar el proyecto:
 * **express-handlebars**: Handlebars view engine para Express.js.
 * **socket.io**: Framework para utilizar Websockets.
 * **mongoose**: Framework para conectar con MongoDB (Base de Datos).
+* **mongoose-paginate-v2**: plugin de paginación en mongoose.
 * **dotenv**: librería para proteger información sensitiva.
 
 ## Dependencias (Dev)
