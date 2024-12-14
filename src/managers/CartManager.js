@@ -65,17 +65,30 @@ export default class CartManager {
         try {
             const cartFound = await this.#findOneById(id);
             const productIndex =
-                recipe.products.findIndex((item) => item.product._id.toString() === productId);
+                cartFound.products.findIndex((item) => item.product._id.toString() === productId);
 
             if (productIndex >= 0) {
-                recipe.products[productIndex].quantity++;
+                cartFound.products[productIndex].quantity++;
             } else {
-                recipe.products.push({ product: productId, quantity: 1 });
+                cartFound.products.push({ product: productId, quantity: 1 });
             }
 
-            await recipe.save();
+            await cartFound.save();
 
             return cartFound;
+        } catch (error) {
+            throw ErrorManager.handleError(error);
+        }
+    }
+
+    // Elimina un producto específico dentro de un carrito
+    async delProductFromCart(id, productId) {
+        try {
+            const result = await this.#cartModel.findByIdAndUpdate(
+                id,
+                { $pull: { products: { product: { $eq: productId } } } })
+
+            return result;
         } catch (error) {
             throw ErrorManager.handleError(error);
         }
