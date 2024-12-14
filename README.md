@@ -10,7 +10,6 @@ Instrucciones para ejecutar el proyecto:
   * ```MONGO_DBNAME=nombre_de_tu_base_de_datos```
   * ```MONGO_CLUSTER_URL=tu_cluster.mongodb.net```
 * Para correr el proyecto localmente, ejecutar: ```npm start```
-* Para correr casos de prueba del proyecto, ejecutar: ```npm test```
 
 ## Dependencias
 * **express**: Web Framework liviano para Node.js.
