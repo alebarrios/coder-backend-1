@@ -39,11 +39,18 @@ export default class ProductManager {
                 desc: { price: -1 },
             };
 
+            const myCustomLabels = {
+                limit: false,
+                totalDocs: false,
+                pagingCounter: false,
+              };
+
             const paginationOptions = {
                 limit: params?.limit || 10, // Número de documentos por página (por defecto 10)
                 page: params?.page || 1, // Página actual (por defecto 1)
                 sort: sort[params?.sort] ?? {}, // Ordenamiento (sin orden por defecto)
                 lean: true, // Convertir los resultados en objetos planos
+                customLabels: myCustomLabels,
             };
 
             return await this.#productModel.paginate(filters, paginationOptions);

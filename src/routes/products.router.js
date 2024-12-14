@@ -18,8 +18,14 @@ export default (app) => { app.use('/api/products', productsRouter)}
 
 async function getAllProducts(req,res){
     try {
+
         const products = await productManager.getAll(req.query);
-        res.status(200).json({ status: "success", payload: products });
+        const myProducts = {
+            ...products,
+            prevLink: products.prevPage ? req.originalUrl + "&page=" + products.prevPage : null,
+            nextLink: products.nextPage ? req.originalUrl + "&page=" + products.nextPage : null,
+        }
+        res.status(200).json({ status: "success", payload: myProducts });
 
     } catch (error) {
         res.status(error.code).json({ status: "error", message: error.message });
