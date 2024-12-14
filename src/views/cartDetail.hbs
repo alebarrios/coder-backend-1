@@ -1,0 +1,25 @@
+<header>
+    <h1>Carrito - # {{ id }}</h1>
+</header>
+
+<main class="container">
+    <table>
+        <tbody id="products-list">
+        <tr>
+            <th>Id</th>
+            <th>Título</th>
+            <th>Precio</th>
+            <th>Cantidad</th>
+        </tr>
+            {{#each products }}
+            <tr>
+            <td>{{this.product._id}}</td>
+            <td>{{this.product.title}}</td>
+            <td>{{this.product.price}}</td>
+            <td>{{this.quantity}}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+    <button id="btn-empty-cart">Vaciar Carrito</button>
+</main>

@@ -18,7 +18,6 @@ export default (app) => { app.use('/api/products', productsRouter)}
 
 async function getAllProducts(req,res){
     try {
-
         const products = await productManager.getAll(req.query);
         const myProducts = {
             ...products,
