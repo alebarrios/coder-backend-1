@@ -107,4 +107,31 @@ export default class CartManager {
         }
     }
 
+    // Actualiza la cantidad de productos dentro de un carrito
+    async setQuantOfProductsInCart(id, productId, data) {
+        try {
+
+            if (!data?.quantity) {
+                throw new ErrorManager("campo quantity no recibido", 400);
+            }
+
+            if (isNaN(parseInt(data.quantity))) {
+                throw new ErrorManager("campo quantity no es numérico", 400);
+            }
+
+            if (data.quantity < 0) {
+                throw new ErrorManager("campo quantity no puede ser negativo", 400);
+            }
+
+            const result = await this.#cartModel.findByIdAndUpdate(
+                    id,
+                    { $set: { 'products.$[elem].quantity': data.quantity } },
+                    { arrayFilters: [{ 'elem.product': productId }], new: true} )
+
+            return result;
+        } catch (error) {
+            throw ErrorManager.handleError(error);
+        }
+    }
+
 }
