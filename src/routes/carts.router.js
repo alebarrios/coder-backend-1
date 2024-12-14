@@ -14,6 +14,7 @@ cartsRouter.put('/:cid/products/:pid', setQuantityOfProductsInCart)
 
 
 cartsRouter.delete('/:cid/products/:pid', deleteProductFromCart)
+cartsRouter.delete('/:cid', deleteAllProductsFromCart)
 
 //inversion de control. Lo uso para poder hacer el Testing lo mas desacoplado posible.
 export default (app) => { app.use('/api/carts', cartsRouter)}
@@ -72,6 +73,16 @@ async function deleteProductFromCart(req,res){
     try {
         const { cid, pid } = req.params;
         const cart = await cartManager.delProductFromCart(cid,pid);
+        res.status(200).json({ status: "success", payload: cart });
+    } catch (error) {
+        res.status(error.code || 500).json({ status: "error", message: error.message });
+    }
+};
+
+async function deleteAllProductsFromCart(req,res){
+    try {
+        const { cid } = req.params;
+        const cart = await cartManager.updateProductsInCart(cid);
         res.status(200).json({ status: "success", payload: cart });
     } catch (error) {
         res.status(error.code || 500).json({ status: "error", message: error.message });

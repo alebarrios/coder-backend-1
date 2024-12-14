@@ -95,7 +95,7 @@ export default class CartManager {
     }
 
     // Actualiza el array completo de productos dentro de un carrito
-    async updateProductsInCart(id, data) {
+    async updateProductsInCart(id, data = []) {
         try {
             const result = await this.#cartModel.findByIdAndUpdate(
                  id,
